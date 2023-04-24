@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Clue 3</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.css"
+    />
+    <link
+      rel="icon"
+      href="https://thumbs.dreamstime.com/b/escape-to-island-concept-summer-seaside-landscape-blue-ocean-scenic-view-hand-drawn-tropica-poster-holiday-vacation-season-sea-136710208.jpg"
+      type="image/x-icon"
+    />
+    <style>
+      .hidden {
+        position: absolute;
+        left: -9999px;
+        opacity: 0;
+      }
+      body {
+        background-image: url("/static/images/partyhat.jpg");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+      }
+      #hidden-button {
+        height: 75px;
+        width: 70px;
+        position: fixed;
+        bottom: 19%;
+        left: 12%;
+        transform: translateX(-50%);
+      }
+      .question{
+        background-color: rgb(183, 224, 243);
+        width: 160px;
+        border-radius: 10%;
+        padding-left: 15px;
+        color: black;
+        opacity:0.9;
+      }
+    </style>
+  </head>
+  <body onclick="handleClick(event)">
+    <button id="hidden-button" class="hidden" onclick="check()">
+      Click me!
+    </button>
+    <div class="question">
+    <h1>Clue 3</h1>
+    <p>Click on hidden Parthat if you can ??</p>
+    <span>Time Remaining: <span id="timer">3:00</span></span>
+    <br />
+    <span>Current Points: <span id="points">100</span></span>
+    <br />
+  </div>
+    <div id="congrats"></div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.all.min.js"></script>
+
+    <script>
+      var timeLeft = 180;
+      var timer = setInterval(function () {
+        var minutes = Math.floor(timeLeft / 60);
+        var seconds = timeLeft % 60;
+        document.getElementById("timer").innerHTML =
+          minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
+        timeLeft -= 1;
+        if (timeLeft < 0) {
+          clearInterval(timer);
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Time is up!",
+          }).then(function () {
+            window.location.href = "/clues/game.html";
+          });
+        }
+      }, 1000);
+
+      var points = 100;
+      var totalPoints = parseInt(localStorage.getItem("totalPoints"));
+
+      var pointTimer = setInterval(function () {
+        points -= 1;
+        document.getElementById("points").innerHTML = points;
+
+        if (points <= 0) {
+          clearInterval(pointTimer);
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "You ran out of points!",
+          }).then(function () {
+            window.location.href = "/clues/game.html";
+          });
+        }
+      }, 15000);
+
+      function check() {
+          clearInterval(timer);
+          clearInterval(pointTimer);
+          document.getElementById("congrats").style.visibility = "visible";
+          Swal.fire({
+            icon: "success",
+            title: "Congratulations!",
+            text: "You got it!",
+          }).then(function () {
+            document.getElementById("congrats").style.visibility = "hidden";
+            var totalPoints =
+              parseInt(localStorage.getItem("totalPoints")) + points;
+            localStorage.setItem("currentClue", 4);
+            localStorage.setItem("totalPoints", totalPoints);
+            window.location.href = "/clues/game.html";
+          });
+        } 
+
+        function deductPoints() {
+          points -= 2;
+          document.getElementById("points").innerHTML = points;
+          Swal.fire({
+              title: "Incorrect Answer!",
+              text: "Please try again.",
+              icon: "error",
+            }).then(function() {});
+        }
+
+        function handleClick(event) {
+          if (event.target.id === "hidden-button") {
+            check();
+          } else if (event.target.classList.contains("swal2-confirm")) {
+            // If the user clicks on the "OK" button of the Swal.fire alert box, do nothing
+          } else {
+            deductPoints();
+          }
+        }
+
+        document.addEventListener("click", handleClick);
+    </script>
+  </body>
+</html>

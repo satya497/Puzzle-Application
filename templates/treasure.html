@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Final Treasure</title>
+    <link
+      rel="icon"
+      href="https://thumbs.dreamstime.com/b/escape-to-island-concept-summer-seaside-landscape-blue-ocean-scenic-view-hand-drawn-tropica-poster-holiday-vacation-season-sea-136710208.jpg"
+      type="image/x-icon"
+    />
+    <style>
+      .confetti {
+        position: fixed;
+        height: 100%;
+        width: 100%;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+        z-index: 9999;
+      }
+      .confetti .particle {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        background-color: #ffdd00;
+        border-radius: 50%;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+        animation: confetti 1s ease-in-out infinite;
+      }
+      .confetti .particle:nth-of-type(1) {
+        left: 25%;
+        animation-delay: 0.75s;
+      }
+      .confetti .particle:nth-of-type(2) {
+        left: 50%;
+        animation-delay: 0.5s;
+      }
+      .confetti .particle:nth-of-type(3) {
+        left: 75%;
+        animation-delay: 0.25s;
+      }
+      .confetti .particle:nth-of-type(4) {
+        left: 40%;
+        animation-delay: 1s;
+      }
+      .confetti .particle:nth-of-type(5) {
+        left: 60%;
+        animation-delay: 1.25s;
+      }
+      @keyframes confetti {
+        0% {
+          transform: translateY(0) rotate(0deg);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(1000px) rotate(360deg);
+          opacity: 0;
+        }
+      }
+      h1 {
+        font-size: 5em;
+        text-align: center;
+        animation: pulse 2s ease-in-out infinite;
+      }
+
+      p {
+        font-size: 2em;
+        text-align: center;
+      }
+
+      @keyframes pulse {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.1);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Congratulations!</h1>
+    <p>You have found the final treasure!</p>
+    <div class="confetti">
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script>
+      // Calculate user's total time taken
+      var startTime = localStorage.getItem("startTime");
+      var endTime = new Date().getTime();
+      var totalTime = Math.floor((endTime - startTime) / 1000);
+
+      // Get user's total points
+      var totalPoints = localStorage.getItem("totalPoints");
+      if (totalPoints==500){
+        totalTime=20;
+      }
+      var softSkills = "";
+
+      if (totalPoints > 470) {
+        softSkills =
+          "1) Eye for detail<br>2) Perseverance<br>3) Curiosity<br>4) Presence of mind<br>5) Time management";
+      } else if (totalPoints > 400) {
+        softSkills =
+          "1) Eye for detail<br>2) Perseverance<br>3) Presence of mind<br>4) Time management";
+      } else if (totalPoints > 350) {
+        softSkills =
+          "1) Eye for detail<br>2) Perseverance<br>3) Presence of mind";
+      } else if (totalPoints > 300) {
+        softSkills = "1) Eye for detail<br>2) Perseverance";
+      } else if (totalPoints > 250) {
+        softSkills = "1) Eye for detail<br>2) Presence of mind";
+      }
+
+      // Show congratulatory message with animation
+      Swal.fire({
+        title: "Congratulations!",
+        html:
+          "You have found the final treasure!<br><br>Total points: " +
+          totalPoints +
+          " out of 500<br>Total time taken: " +
+          totalTime +
+          " seconds<br><br>Soft skills observed:<br>" +
+          softSkills,
+        icon: "success",
+        confirmButtonText: "OK",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          // Send an AJAX request to update the user's points in the database
+          var xhr = new XMLHttpRequest();
+          xhr.open("POST", "/update_points", true);
+          xhr.setRequestHeader("Content-Type", "application/json");
+          xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+              // Redirect to home page
+              localStorage.clear();
+              window.location.href = "/";
+            }
+          };
+          xhr.send(JSON.stringify({ points: totalPoints }));
+        }
+      });
+    </script>
+  </body>
+</html>

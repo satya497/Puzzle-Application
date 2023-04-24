@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Mystery Island</title>
+
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <link
+      rel="icon"
+      href="https://thumbs.dreamstime.com/b/escape-to-island-concept-summer-seaside-landscape-blue-ocean-scenic-view-hand-drawn-tropica-poster-holiday-vacation-season-sea-136710208.jpg"
+      type="image/x-icon"
+    />
+    <!-- Custom CSS -->
+    <style>
+      body {
+        color: #fff;
+        font-family: Arial, sans-serif;
+        background-image: url(https://www.godisageek.com/wp-content/uploads/Escape-Academy-Escape-from-Anti-Escape-Island-Walkthrough.jpg);
+        background-repeat: no-repeat; /* Do not repeat the image */
+        background-size: cover;
+      }
+
+      .container {
+        margin-top: 50px;
+      }
+
+      h1,
+      h2,
+      h4,
+      h5,
+      h6 {
+        margin-top: 290px;
+        font-weight: bold;
+      }
+
+      h1 {
+        font-size: 70px;
+        text-align: center;
+      }
+
+      h3 {
+        font-size: 24px;
+        line-height: 1.5;
+        text-align: center;
+      }
+
+      .btn {
+        font-size: 15px;
+        padding: 10px 20px;
+        margin-top: 20px;
+        background-color: #ffc107;
+        border: none;
+        border-radius: 0;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        transition: all 0.3s ease-in-out;
+      }
+
+      .btn:hover {
+        background-color: #ff9800;
+        color: #fff;
+        border: none;
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.4);
+      }
+
+      #logout-btn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+      }
+      #adv-btn {
+        margin-left: 430px;
+      }
+      h1 {
+        font-size: 4em;
+        text-transform: uppercase;
+        text-align: center;
+        color: #fff;
+        text-shadow: 2px 2px #000;
+        display: inline-block;
+        animation: tilt 2s ease-in-out infinite;
+      }
+
+      @keyframes tilt {
+        0% {
+          transform: translateX(0) rotateY(0);
+        }
+        50% {
+          transform: translateX(-10px) rotateY(10deg);
+        }
+        100% {
+          transform: translateX(0) rotateY(0);
+        }
+      }
+      .btn-group .btn{
+        width:200px;
+      }
+      #adv1{
+        margin-left:300px;
+      }
+      #adv2{
+        margin-left:60px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Welcome to Mystery Island...</h1>
+      <button
+        class="btn btn-lg"
+        id="logout-btn"
+        onclick="location.href='/logout'"
+      >
+        Logout
+      </button>
+      <div class="btn-group">
+        <button class="btn btn-lg" id="adv1" onclick="startAdventure()" style="display: inline-block;">
+            Check Users Status
+          </button>
+          <button class="btn btn-lg" id="adv2" onclick="startAdventure1()" style="display: inline-block;">
+            Users Data Visualization
+          </button>
+          
+      </div>
+      
+    </div>
+
+    <script>
+      function startAdventure() {
+        window.location.href = "/users";
+      }
+      function startAdventure1() {
+        window.location.href = "/visual.html";
+      }
+
+    </script>
+  </body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  </head>
+  <body>
+    <div id="chart"></div>
+    <script>
+      // Extract user data from Flask template variable
+      var users = JSON.parse('{{ users|tojson|safe }}');
+
+      // Extract points from user data and create trace for Plotly bar chart
+      var trace = {
+        x: users.map(user => user[4]),  // Points
+        y: users.map(user => user[1]),  // Usernames
+        type: 'bar',
+        orientation: 'h'
+      };
+
+      // Create Plotly layout and plot chart
+      var layout = {
+        title: 'User Points',
+        xaxis: {title: 'Points'},
+        yaxis: {title: 'Usernames'}
+      };
+      Plotly.newPlot('chart', [trace], layout);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Mystery Island</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <style>
+      body {
+        color: #fff;
+        font-family: Arial, sans-serif;
+        background-image: url(https://www.godisageek.com/wp-content/uploads/Escape-Academy-Escape-from-Anti-Escape-Island-Walkthrough.jpg);
+        background-repeat: no-repeat; /* Do not repeat the image */
+        background-size: cover;
+      }
+
+      .container {
+        margin-top: 50px;
+      }
+
+      h1, h2, h4, h5, h6 {
+        margin-top:290px;
+        font-weight: bold;
+      }
+
+      h1 {
+        font-size: 70px;
+        text-align: center;
+      }
+
+      h3 {
+        font-size: 24px;
+        line-height: 1.5;
+        text-align: center;
+      }
+
+      .btn {
+        font-size: 15px;
+        padding: 10px 20px;
+        margin-top: 20px;
+        background-color: #ffc107;
+        border: none;
+        border-radius: 0;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        transition: all 0.3s ease-in-out;
+      }
+
+      .btn:hover {
+        background-color: #ff9800;
+        color: #fff;
+        border: none;
+        box-shadow: 0px 2px 4px rgba(0,0,0,0.4);
+      }
+
+      #logout-btn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        
+      }
+      #adv-btn{
+        margin-left:430px;
+      }
+      h1 {
+        font-size: 4em;
+        text-transform: uppercase;
+        text-align: center;
+        color: #fff;
+        text-shadow: 2px 2px #000;
+        display: inline-block;
+        animation: tilt 2s ease-in-out infinite;
+      }
+  
+      @keyframes tilt {
+        0% {
+          transform: translateX(0) rotateY(0);
+        }
+        50% {
+          transform: translateX(-10px) rotateY(10deg);
+        }
+        100% {
+          transform: translateX(0) rotateY(0);
+        }
+      }
+    </style>
+  </head>
+  <body>
+
+    <div class="container">
+      <h1>Welcome to Mystery Island...</h1>
+    
+      <button class="btn btn-lg " id="logout-btn" onclick="location.href='/logout'">Logout</button>
+      <button class="btn btn-lg" id="adv-btn" onclick="startAdventure()">Start the Adventure</button>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Custom JS -->
+    <script>
+      // Clues data
+      const clues = [
+        {
+          id: 1,
+          clue: "I am always hungry, I must always be fed. The finger I touch, Will soon turn red. What am I?",
+          answer: "fire"
+        },
+        {
+          id: 2,
+          clue: "What is full of holes but still holds water?",
+          answer: "sponge"
+        },
+        {
+          id: 3,
+          clue: "The more you take, the more you leave behind. What am I?",
+          answer: "footsteps"
+        },
+        {
+          id: 4,
+          clue: "You see a boat filled with people. It has not sunk, but when you look again you don’t see a single person on the boat. Why?",
+          answer: "all the people were married"
+        },
+        {
+          id: 5,
+          clue: "What has a head and a tail, but no body?",
+          answer: "coin"
+        },
+        {
+          id: 6,
+          clue: "The person who makes it has no need of it. The person who buys it has no use for it. The person who uses it can neither see nor feel it. What is it?",
+          answer: "coffin"
+        }
+      ];
+
+      // Save progress in localStorage
+      function saveProgress(currentClue) {
+        localStorage.setItem('currentClue', currentClue);
+      }
+
+      // Retrieve progress from localStorage
+      function getProgress() {
+        const currentClue = localStorage.getItem('currentClue');
+        return currentClue ? parseInt(currentClue) : 0;
+      }
+
+      // Render clues
+      function renderClues(currentClue) {
+        const clue = clues[currentClue];
+
+        if (clue) {
+          // Update clue text
+          $('#clue').text(clue.clue);
+
+          // Clear answer input
+          $('#answer-input').val('');
+
+          // Save progress
+          saveProgress(currentClue);
+        } else {
+          // Final clue reached, show treasure
+          $('#clue-container').hide();
+          $('#treasure-container').show();
+        }
+      }
+
+      // Check answer
+      function checkAnswer(currentClue) {
+        const answer = $('#answer-input').val().toLowerCase();
+        const clue = clues[currentClue];
+
+        if (answer === clue.answer) {
+          // Correct answer, move to next clue
+          renderClues(currentClue + 1);
+        } else {
+          // Incorrect answer, show error message
+          $('#error-message').show();
+        }
+      }
+
+      // Start adventure function
+      function startAdventure() {
+        // Render initial clue
+        const currentClue = getProgress();
+        renderClues(currentClue);
+
+        // Bind answer check function to submit button
+        $('#submit-answer').click(function(e) {
+          e.preventDefault();
+          checkAnswer(currentClue);
+        });
+
+        // Hide error message on input change
+        $('#answer-input').on('input', function() {
+          $('#error-message').hide();
+        });
+      }
+    </script>
+  </body>
+</html>
+

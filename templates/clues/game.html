@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Main Question</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <link
+      rel="icon"
+      href="https://thumbs.dreamstime.com/b/escape-to-island-concept-summer-seaside-landscape-blue-ocean-scenic-view-hand-drawn-tropica-poster-holiday-vacation-season-sea-136710208.jpg"
+      type="image/x-icon"
+    />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        color: black;
+        background-image: url("https://free4kwallpapers.com/uploads/originals/2020/02/16/tropical-escape--by-louis-coyle-wallpaper.png");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+      }
+      h1 {
+        font-size: 36px;
+        margin-top: 100px;
+        text-align: center;
+        text-shadow: 1px 1px #000000;
+      }
+      #main-question {
+        margin: auto;
+        max-width: 500px;
+        padding: 20px;
+        background-color: rgba(
+          255,
+          255,
+          255,
+          0.5
+        ); /* set the alpha channel to 0.5 */
+        border-radius: 10px;
+        box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+      }
+
+      h2 {
+        font-size: 27px;
+        text-align: center;
+        text-shadow: 1px 1px #000000;
+      }
+      input[type="text"],
+      input[type="submit"],
+      button {
+        font-family: Arial, sans-serif;
+        font-size: 18px;
+        padding: 10px;
+        margin: 10px;
+        border-radius: 5px;
+        border: none;
+        cursor: pointer;
+      }
+      input[type="text"] {
+        width: 90%;
+      }
+      input[type="submit"] {
+        background-color: #4caf50;
+        color: white;
+      }
+      button {
+        background-color: #008cba;
+        color: white;
+      }
+      button:hover,
+      input[type="submit"]:hover {
+        opacity: 0.8;
+      }
+      #get-clues {
+        float: right;
+        position: fixed;
+        top: 0;
+        right: 0;
+      }
+      #read-instructions {
+        float: right;
+        position: fixed;
+        top: 40px;
+        right: 0;
+      }
+      #statement-box,#instructions-box,total-points-box  {
+        background-color: #3c3c3c;
+        color: #fff;
+        padding: 8px;
+        border-radius: 5px;
+        font-size: 16px;
+        text-shadow: 1px 1px #000;
+        box-shadow: 0px 0px 10px #000;
+        display: none;
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        animation: slide-in 0.5s forwards;
+      }
+      #statement-box{
+        text-align: center;
+      }
+      @keyframes slide-in {
+        0% {
+          opacity: 0;
+          bottom: -50px;
+        }
+        100% {
+          opacity: 1;
+          bottom: 20px;
+        }
+      }
+
+      ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+      }   
+      #restart {
+        margin-top: 20px;
+        background-color: red;
+        color: white;
+        border: none;
+        padding: 10px;
+        font-size: 16px;
+        margin-left:560px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    #restart:hover {
+        background-color: darkred;
+    }
+
+    #total-points {
+        margin-top: 70px;
+        background-color: green;
+        color: white;
+        border: none;
+        padding: 10px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    #total-points:hover {
+        background-color: darkgreen;
+    }
+
+    #go-back {
+        margin-top: 70px;
+        background-color: blue;
+        color: white;
+        border: none;
+        padding: 10px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    #go-back:hover {
+        background-color: darkblue;
+
+    }
+
+    #total-points-box {
+      background-color: #3c3c3c;
+      color: #fff;
+      padding: 8px;
+      border-radius: 5px;
+      font-size: 16px;
+      text-shadow: 1px 1px #000;
+      box-shadow: 0px 0px 10px #000;
+      display: none;
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      animation: slide-in 0.5s forwards;
+    }
+    
+    </style>
+  </head>
+  <body>
+    <h1 class="animate__animated animate__fadeInDown">
+      PLAY THE GAME !! OBSERVE THE SURROUNDINGS KEENLY!
+    </h1>
+    <u
+      ><h2 class="animate__animated animate__fadeInDown">
+        Figure me out so as to cross this ISLAND..
+      </h2></u
+    >
+    <br />
+    <div id="main-question" class="animate__animated animate__fadeIn">
+      <h2>The more you take, the more you leave behind. What am I ???</h2>
+      <input
+        type="text"
+        id="answer-input"
+        name="answer"
+        placeholder="Any Guess ?"
+        required
+      />
+      <input type="submit" value="Submit" onclick="checkAnswer()" />
+      <button class="btn btn-lg" id="adv-btn" onclick="startAdventure()">
+        Get Clues
+      </button>
+      <button id="read-instruction" class="fouzi">Read Instructions</button>
+      <div id="instructions-box"></div>
+      </button>
+    </div>
+    <div id="statement-box"></div>
+    <div id="congrats"></div>
+    <div id="total-points-box"><span id="total-points-text">0</span></div>
+
+
+      <button id="restart" onclick="restart()">Restart Game</button>
+      <button id="total-points" onmouseover="showTotalPoints()">Total Points</button>      
+    <button id="go-back" onclick="goBack()">Go Back</button>
+    
+    <script>
+
+      function showTotalPoints() {
+        var totalPoints = localStorage.getItem("totalPoints") || 0;
+
+        
+        if (localStorage.getItem("currentClue")) {
+          var currentClue = parseInt(localStorage.getItem("currentClue"));
+          if (currentClue == 5) {
+            totalPoints = parseInt(localStorage.getItem("totalPoints"))+100;
+          }
+          else if (currentClue == 4) {
+            totalPoints = parseInt(localStorage.getItem("totalPoints"))+200;
+          }
+          else if (currentClue == 3) {
+            totalPoints = parseInt(localStorage.getItem("totalPoints"))+300;
+          }
+          else if (currentClue == 2) {
+            totalPoints = parseInt(localStorage.getItem("totalPoints"))+400;
+          }
+        }
+        else{
+          totalPoints = 500;
+        }
+
+        const totalPointsBox = document.getElementById("total-points-box");
+        const totalPointsText = document.getElementById("total-points-text");
+        
+        totalPointsText.innerHTML = `Total Points: ${totalPoints}`;
+        
+        totalPointsBox.style.display = "block";
+        
+        // hide the box on mouseout
+        totalPointsBox.addEventListener("mouseout", function() {
+          totalPointsBox.style.display = "none";
+        });
+        
+        // prevent the box from hiding on mouseout if the mouse is still over the box
+        totalPointsBox.addEventListener("mouseover", function() {
+          totalPointsBox.style.display = "block";
+        });
+        
+        // hide the box when the mouse leaves the button
+        document.getElementById("total-points").addEventListener("mouseout", function() {
+          totalPointsBox.style.display = "none";
+        });
+      }
+      
+      
+
+      var statements = [
+      " 0th clue",
+      "I come in pairs, but I'm not shoes !",
+      "I can lead you to new places, but I can also lead you astray !!",
+      "I come in many shapes and sizes !!!",
+      "I'm often associated with detective work !!!!",
+      "I'm made when a person takes a step !!!!!"
+    ];
+    var currentClue = localStorage.getItem("currentClue");;
+    
+
+    document.getElementById("adv-btn").addEventListener("mouseover", function() {
+      var statementBox = document.getElementById("statement-box");
+      statementBox.innerHTML = "";
+      for (let i = 1; i < currentClue; i++) {
+        statementBox.innerHTML += "<p>" + statements[i] + "</p>";
+      }
+      statementBox.style.display = "block";
+    });
+
+    document.getElementById("adv-btn").addEventListener("mouseout", function() {
+      var statementBox = document.getElementById("statement-box");
+      statementBox.style.display = "none";
+    });
+
+      function startAdventure() {
+        var currentTime = new Date().getTime();
+
+        // Store the current time in localStorage
+        localStorage.setItem("startTime", currentTime);
+
+
+        fetch("/check-user")
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.progress == 1) {
+              localStorage.clear();
+            }
+            if (localStorage.getItem("currentClue")) {
+              var currentClue = parseInt(localStorage.getItem("currentClue"));
+              if (currentClue == 6){
+                alert("All clues are unlocked!");
+              }
+              else if (currentClue >= 1 && currentClue <= 5) {
+                window.location.href = `/clues/${currentClue}.html`;
+              } else {
+                window.location.href = "/clues/1.html";
+              }
+            } else {
+              window.location.href = "/clues/1.html";
+            }
+          });
+      }
+
+      function checkAnswer() {
+        var answerInput = document.getElementById("answer-input");
+        var answer = answerInput.value.trim().toLowerCase();
+        if (answer === "footsteps") {
+          window.location.href = "/treasure.html";
+         
+          if (localStorage.getItem("currentClue")) {
+            var currentClue = parseInt(localStorage.getItem("currentClue"));
+            if (currentClue == 6){
+              var totalPoints = parseInt(localStorage.getItem("totalPoints"));
+              localStorage.setItem("totalPoints",totalPoints);
+            }
+            else if (currentClue == 5) {
+              var totalPoints = parseInt(localStorage.getItem("totalPoints"))+100;
+              localStorage.setItem("totalPoints",totalPoints);
+            }
+            else if (currentClue == 4) {
+              var totalPoints = parseInt(localStorage.getItem("totalPoints"))+200;
+              localStorage.setItem("totalPoints",totalPoints);
+            }
+            else if (currentClue == 3) {
+              var totalPoints = parseInt(localStorage.getItem("totalPoints"))+300;
+              localStorage.setItem("totalPoints",totalPoints);
+            }
+            else if (currentClue == 2) {
+              var totalPoints = parseInt(localStorage.getItem("totalPoints"))+400;
+              localStorage.setItem("totalPoints",totalPoints);
+            }
+          }
+          else{
+            localStorage.setItem("totalPoints",500);
+          }
+        } else {
+          alert("Oops! Your guess is incorrect. Get Clues ??");
+        }
+      }
+
+      const readInstructionsBtn = document.getElementById('read-instruction');
+      const instructionsBox = document.getElementById('instructions-box');
+
+      readInstructionsBtn.addEventListener('mouseover', () => {
+        instructionsBox.style.display = 'block';
+      });
+
+      readInstructionsBtn.addEventListener('mouseout', () => {
+        instructionsBox.style.display = 'none';
+      });
+
+
+      function restart() {
+        window.location.href = "../game.html";
+      }
+      
+    
+      function goBack() {
+        window.location.href = "../game.html";
+      }
+      
+      instructionsBox.innerHTML = `
+        <ul>
+          <li>=> INSTRUCTIONS <=</li>
+          <li> 1 -> There is a main question if you answer it you get 500 points</li>
+          <li> 2 -> There are 5 clues available ! Each clue divided into 100 points </li>
+          <li> 3 -> But each clue assigned with a Task ! if you fail to complete task that is deadend</li>
+          <li> 4 -> If you complete the task ! Then a clue will be displayed </li>
+          <li> 5 -> Your soft skills are also calculated for each step you take</li>
+          <li> 6 -> After 5 clues completed ! if you are not able to answer -> That is deadEnd
+          </li>
+          <li> 7 -> If it is Deadend! You must Restart the game</li>
+        </ul>
+      `;
+
+    </script>
+  </body>
+</html>

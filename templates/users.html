@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>All Users</title>
+    <style>
+      body {
+        background-color: #f1f1f1;
+        background-image: url("https://i.pinimg.com/originals/0d/31/db/0d31db928403483743107ed087f469bf.jpg");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+      }
+      h1 {
+        text-align: center;
+        margin-top: 50px;
+        font-size: 48px;
+        color: #fff;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        position: relative;
+      }
+      h1:before {
+        content: "";
+        position: absolute;
+        bottom: -20px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 3px;
+        background-color: #555;
+        border-radius: 50px;
+        animation: bottom-bar 1s ease-in-out infinite;
+      }
+      @keyframes bottom-bar {
+        0% {
+          transform: translateX(-50%) scaleX(0);
+        }
+        50% {
+          transform: translateX(-50%) scaleX(1);
+        }
+        100% {
+          transform: translateX(-50%) scaleX(0);
+        }
+      }
+      table {
+        margin: 50px auto;
+        border-collapse: collapse;
+        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+        transform: perspective(1000px) rotateX(45deg);
+        animation: rotate-table 2s ease-in-out forwards;
+      }
+      th,
+      td {
+        padding: 10px;
+        border: 1px solid #ccc;
+        background-color: #fff;
+        transform: rotateX(-45deg);
+        animation: fade-in 2s ease-in-out forwards;
+      }
+      th {
+        background-color: #555;
+        color: #fff;
+        text-align: left;
+        transform: rotateX(-45deg);
+      }
+      tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+      @keyframes rotate-table {
+        from {
+          transform: perspective(1000px) rotateX(45deg);
+        }
+        to {
+          transform: perspective(1000px) rotateX(0deg);
+        }
+      }
+      @keyframes fade-in {
+        from {
+          opacity: 0;
+          transform: rotateX(-90deg);
+        }
+        to {
+          opacity: 1;
+          transform: rotateX(-45deg);
+        }
+      }
+      table {
+        border-collapse: collapse;
+      }
+      
+      td, th {
+        border: none;
+      }
+      
+      td, th {
+        font-size: 20px;
+      }
+      .btn-go-back {
+        position: absolute;
+        top: 30px;
+        right: 30px;
+        padding: 10px;
+        background-color: #424242;
+        color: #fff;
+        text-transform: uppercase;
+        font-size: 14px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+        transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    }
+    .btn-go-back:hover {
+        transform: translateY(-2px);
+        box-shadow: 0px 2px 10px rgba(0,0,0,0.3);
+        background-color:#4287f5;
+    }
+    </style>
+  </head>
+  <body>
+    <button class="btn-go-back" onclick="goBack()">Go Back</button>
+    <br><br>
+    <h1>All Users Status</h1>
+    <br>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Username</th>
+          <th>Email</th>
+          <th>Password</th>
+          <th>Points</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in rows %}
+        <tr>
+          <td>{{ row[0] }}</td>
+          <td>{{ row[1] }}</td>
+          <td>{{ row[2] }}</td>
+          <td>{{ row[3] }}</td>
+          <td>{{ row[4] }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <script>
+        function goBack() {
+            window.location.href = "/avisual";
+          }
+    </script>
+  </body>
+</html>
